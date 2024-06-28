@@ -31,15 +31,18 @@ public class TipsManager {
         return tips.get(new Random().nextInt(tips.size()));
     }
 
-    public void load() {
+    public void reload() {
         ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 
+        Map<String, List<Tip>> newTips = new HashMap<>();
         for (Map.Entry<ResourceLocation, Resource> entry : resourceManager.listResources("tips", location -> true).entrySet()) {
             String languageCode = entry.getKey().getPath().split("/")[1].split("\\.")[0];
-            if (!this.tips.containsKey(languageCode))
-                this.tips.put(languageCode, new ArrayList<>());
-            this.tips.get(languageCode).addAll(loadTips(entry.getValue()));
+            if (!newTips.containsKey(languageCode))
+                newTips.put(languageCode, new ArrayList<>());
+            newTips.get(languageCode).addAll(loadTips(entry.getValue()));
         }
+        this.tips.clear();
+        this.tips.putAll(newTips);
     }
 
     private List<Tip> loadTips(Resource resource) {

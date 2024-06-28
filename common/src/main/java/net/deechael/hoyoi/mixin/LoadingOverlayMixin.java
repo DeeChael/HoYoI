@@ -61,9 +61,12 @@ public class LoadingOverlayMixin {
     private void inject$render$head(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick, CallbackInfo ci) {
         if (HoYoICaching.FIRST_LOADING) {
             HoYoICaching.FIRST_LOADING = false;
-            HoYoI.getTipsManager().load(); // put here because i don't know why resource manager is null when loading mod
-            GenshinIcons.load();
         } // starting game and ingame loading screen is different
+
+        // put here because i don't know why resource manager is null when loading mod
+        // and another reason: for resource pack customization
+        HoYoI.getTipsManager().reload();
+        GenshinIcons.reload();
         GenshinStyle.ICON = GenshinIcons.randomIcon();
     }
 
