@@ -1,0 +1,89 @@
+[
+  {
+    "title": "Torches",
+    "desc": [
+      "You can use torches to light your surroundings and prevent mobs spawning,",
+      "you can also use torches to break sand and gravel easily by placing it when they fall."
+    ]
+  },
+  {
+    "title": "Trading",
+    "desc": [
+      "The trading system is a gameplay mechanic that allows players",
+      "to trade principally emeralds for items and vice versa, with villagers and wandering traders."
+    ]
+  },
+  {
+    "title": "Monsters",
+    "desc": [
+      "Most monsters only come out at night. During the day you're safe... probably."
+    ]
+  },
+  {
+    "title": "Crafting",
+    "desc": [
+      "Break blocks, pick up resources. Use the crafting grid to make helpful items. Now you're crafting!"
+    ]
+  },
+  {
+    "title": "Survival",
+    "desc": [
+      "You have endless lives, but your items drop to the ground when you die. Hurry back to pick them up!"
+    ]
+  },
+  {
+    "title": "Shelter",
+    "desc": [
+      "It's a good idea to build a place where you can safely spend the night."
+    ]
+  },
+  {
+    "title": "Tools",
+    "desc": [
+      "Use the right tool for the job! Chopping wood with an axe is much faster than using your hands."
+    ]
+  },
+  {
+    "title": "Hunger",
+    "desc": [
+      "Even in Minecraft you'll get hungry, so try to find something to eat before that happens."
+    ]
+  },
+  {
+    "title": "Mining",
+    "desc": [
+      "Digging straight down or straight up might not be a great idea."
+    ]
+  },
+  {
+    "title": "Monsters",
+    "desc": [
+      "Monsters spawn in the dark. Craft a torch to brighten up any space."
+    ]
+  },
+  {
+    "title": "Beds",
+    "desc": [
+      "Beds are great! Craft one to quickly pass the night and set your respawn point."
+    ]
+  },
+  {
+    "title": "Oxygen",
+    "desc": [
+      "Be careful when you swim. Stay under water for too long and you'll run out of air."
+    ]
+  },
+  {
+    "title": "Difficulty",
+    "desc": [
+      "Survival mode has 4 different difficulty levels - Peaceful, Easy, Normal, and Hard.",
+      "Or play Creative mode and get endless resources!"
+    ]
+  },
+  {
+    "title": "Exploring",
+    "desc": [
+      "The world of Minecraft is endlessly surprising. You'll find lots of different animals, plants."
+    ]
+  }
+]
