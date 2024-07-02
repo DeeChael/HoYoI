@@ -24,6 +24,8 @@ jobs:
           key: ${{ runner.os }}-build-commit-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-build-commit-
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v2
       - name: Build artifacts
         run: ./gradlew build
       - name: Upload artifacts
