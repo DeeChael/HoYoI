@@ -7,6 +7,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Extract current commit sha
+        shell: bash
+        run: |
+          echo sha_short="${GITHUB_SHA:0:6}" >> $GITHUB_OUTPUT
+        id: commit
       - name: Checkout sources
         uses: actions/checkout@v4
       - name: Validate Gradle Wrapper
@@ -34,7 +39,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: hoyoi-artifacts
+          name: hoyoi-artifacts-commit.${{ steps.commit.outputs.sha_short }}
           path: |
             fabric/build/libs/*.jar
             neoforge/build/libs/*.jar

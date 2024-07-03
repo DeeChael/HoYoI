@@ -1,0 +1,28 @@
+name: build-release
+
+on:
+  release:
+     types:
+       - published
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 21
+          check-latest: true
+      - name: Build artifacts
+        run: |
+          chmod +x gradlew
+          ./gradlew build
+      - name: Upload assets to GitHub
+        uses: AButler/upload-release-assets@v3.0
+        with:
+          files: 'neoforge/build/libs/*[0-9]-beta.jar;fabric/build/libs/*[0-9]-beta.jar;LICENSE'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
