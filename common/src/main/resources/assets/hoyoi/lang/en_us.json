@@ -4,5 +4,13 @@
   "hoyoi.pause.button.statistics": "Statistics",
   "hoyoi.pause.button.feedback": "Feedback",
   "hoyoi.pause.button.bug": "Report Bugs",
-  "hoyoi.pause.button.lan": "Open to LAN"
+  "hoyoi.pause.button.lan": "Open to LAN",
+  "hoyoi.option.apply": "Apply",
+  "hoyoi.config.style": "UI Style",
+  "hoyoi.config.reloading": "Replace Reloading",
+  "hoyoi.config.loading_world": "Replace Loading World",
+  "hoyoi.config.pause_screen": "Replace Pause Screen",
+  "hoyoi.option.style.vanilla": "Vanilla",
+  "hoyoi.option.style.genshin": "Genshin",
+  "hoyoi.option.style.star_rail": "Star Rail"
 }

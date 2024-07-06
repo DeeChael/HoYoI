@@ -14,6 +14,7 @@ public class MouseHandlerMixin {
 
     @Inject(method = "onPress", at = @At("HEAD"))
     private void inject$onPress$head(long pWindowPointer, int pButton, int pAction, int pModifiers, CallbackInfo ci) {
+        // so actually whenever you clicked your mouse, the tip will be refreshed xD
         if (!HoYoICaching.FIRST_LOADING && (System.currentTimeMillis() - GenshinStyle.LAST_TIP_TIME) > 200L) {
             GenshinStyle.TIP = HoYoI.getTipsManager().randomTip();
             GenshinStyle.LAST_TIP_TIME = System.currentTimeMillis();

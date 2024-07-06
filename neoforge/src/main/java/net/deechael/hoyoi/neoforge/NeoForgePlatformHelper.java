@@ -17,7 +17,7 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public HoYoIConfig getConfig() {
-        return new NeoForgeHoYoIConfig();
+        return NeoForgeHoYoIConfig.ensureLoaded();
     }
 
     @Override

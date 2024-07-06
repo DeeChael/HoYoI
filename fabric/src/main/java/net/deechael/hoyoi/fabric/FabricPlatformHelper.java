@@ -17,7 +17,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public HoYoIConfig getConfig() {
-        return new FabricHoYoIConfig();
+        return FabricHoYoIConfig.getInstance();
     }
 
     @Override

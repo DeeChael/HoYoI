@@ -287,7 +287,6 @@ public class GenshinStyle implements StyleInstance {
         }
 
         if (pauseScreen.showsPauseMenu()) {
-
             List<Triple<ResourceLocation, WrappedIconButton.OnPress, Component>> MENU_BUTTONS = new ArrayList<>();
 
             MENU_BUTTONS.add(

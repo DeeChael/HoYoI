@@ -2,8 +2,10 @@ package net.deechael.hoyoi.mixin;
 
 import net.deechael.hoyoi.HoYoI;
 import net.deechael.hoyoi.HoYoICaching;
+import net.deechael.hoyoi.config.HoYoIConfig;
 import net.deechael.hoyoi.platform.Services;
 import net.deechael.hoyoi.style.GenshinStyle;
+import net.deechael.hoyoi.style.HoYoIStyle;
 import net.deechael.hoyoi.style.genshin.GenshinIcons;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LoadingOverlay;
@@ -30,20 +32,15 @@ public class LoadingOverlayMixin {
     @Shadow
     private float currentProgress;
 
-    @Inject(method = "<clinit>", at = @At("RETURN"))
-    private static void inject$clinit(CallbackInfo ci) {
-        BRAND_BACKGROUND = () -> FastColor.ARGB32.color(
-                Services.PLATFORM.getConfig().getStyle().getInstance().getBackgroundColorR(),
-                Services.PLATFORM.getConfig().getStyle().getInstance().getBackgroundColorG(),
-                Services.PLATFORM.getConfig().getStyle().getInstance().getBackgroundColorB()
-        ); // change the background color
-    }
+    @Shadow
+    @Final
+    private boolean fadeIn;
 
     // Start
     // Remove fade in and fade out to fit miHoYo games loading style
     @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/client/gui/screens/LoadingOverlay;fadeIn:Z", opcode = Opcodes.GETFIELD))
     private boolean redirect$render$fadeIn(LoadingOverlay instance) {
-        return false;
+        return this.fadeIn;
     }
 
     @ModifyConstant(method = "render", constant = @Constant(floatValue = 500.F))
@@ -56,6 +53,19 @@ public class LoadingOverlayMixin {
         return 0L;
     }
     // End
+
+    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/client/gui/screens/LoadingOverlay;BRAND_BACKGROUND:Ljava/util/function/IntSupplier;"))
+    private IntSupplier redirect$render$BRAND_BACKGROUND() {
+        if (HoYoIConfig.get().getStyle() != HoYoIStyle.VANILLA && HoYoIConfig.get().getReloading()) {
+            return () -> FastColor.ARGB32.color(
+                    HoYoIConfig.get().getStyle().getInstance().getBackgroundColorR(),
+                    HoYoIConfig.get().getStyle().getInstance().getBackgroundColorG(),
+                    HoYoIConfig.get().getStyle().getInstance().getBackgroundColorB()
+            ); // change the background color
+        } else {
+            return BRAND_BACKGROUND;
+        }
+    }
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;init(Lnet/minecraft/client/Minecraft;II)V", shift = At.Shift.AFTER))
     private void inject$render$head(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick, CallbackInfo ci) {
@@ -72,13 +82,19 @@ public class LoadingOverlayMixin {
 
     @Inject(method = "drawProgressBar", at = @At("HEAD"), cancellable = true)
     private void inject$drawProgressBar$head(GuiGraphics pGuiGraphics, int pMinX, int pMinY, int pMaxX, int pMaxY, float pPartialTick, CallbackInfo ci) {
-        Services.PLATFORM.getConfig().getStyle().getInstance().renderProgress(this.currentProgress, pGuiGraphics);
-        ci.cancel();
+        if (HoYoIConfig.get().getStyle() != HoYoIStyle.VANILLA && HoYoIConfig.get().getReloading()) {
+            Services.PLATFORM.getConfig().getStyle().getInstance().renderProgress(this.currentProgress, pGuiGraphics);
+            ci.cancel();
+        }
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(Lnet/minecraft/resources/ResourceLocation;IIIIFFIIII)V", opcode = Opcodes.GETFIELD))
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(Lnet/minecraft/resources/ResourceLocation;IIIIFFIIII)V"))
     private void redirect$render$blit(GuiGraphics instance, ResourceLocation pAtlasLocation, int pX, int pY, int pWidth, int pHeight, float pUOffset, float pVOffset, int pUWidth, int pVHeight, int pTextureWidth, int pTextureHeight) {
         // cancel mojang logo rendering, maybe can optimise because we actually can't see it
+        // but if is Vanilla, don't cancel it
+        if (HoYoIConfig.get().getStyle() == HoYoIStyle.VANILLA || !HoYoIConfig.get().getReloading()) {
+            instance.blit(pAtlasLocation, pX, pY, pWidth, pHeight, pUOffset, pVOffset, pUWidth, pVHeight, pTextureWidth, pTextureHeight);
+        }
     }
 
 }

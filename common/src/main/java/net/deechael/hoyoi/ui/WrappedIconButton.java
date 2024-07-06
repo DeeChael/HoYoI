@@ -3,6 +3,7 @@ package net.deechael.hoyoi.ui;
 import com.google.common.base.Preconditions;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,6 +21,8 @@ public class WrappedIconButton extends AbstractWidget {
         this.resourceLocation = resourceLocation;
         this.name = name;
         this.onPress = onPress;
+
+        this.setTooltip(Tooltip.create(this.name));
     }
 
     @Override

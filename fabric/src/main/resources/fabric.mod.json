@@ -14,8 +14,11 @@
     "icon": "assets/hoyoi/icon.png",
     "environment": "client",
     "entrypoints": {
-        "main": [
+        "client": [
             "net.deechael.hoyoi.fabric.HoYoIFabric"
+        ],
+        "modmenu" : [
+            "net.deechael.hoyoi.fabric.compat.modmenu.ModMenuCompat"
         ]
     },
     "mixins": [
