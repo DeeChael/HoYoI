@@ -10,7 +10,7 @@ jobs:
       - name: Extract current commit sha
         shell: bash
         run: |
-          echo sha_short="${GITHUB_SHA:0:6}" >> $GITHUB_OUTPUT
+          echo sha_short="${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
         id: commit
       - name: Checkout sources
         uses: actions/checkout@v4
