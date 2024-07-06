@@ -1,0 +1,38 @@
+name: build-pullrequest
+
+on: [ pull_request ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Initialize caches
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/loom-cache
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-build-pullrequest-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-build-pullrequest-
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 21
+          check-latest: true
+      - name: Build artifacts
+        run: |
+          chmod +x gradlew
+          ./gradlew build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hoyoi-artifacts-pr.${{ github.event.pull_request.number }}
+          path: |
+            fabric/build/libs/*.jar
+            neoforge/build/libs/*.jar

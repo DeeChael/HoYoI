@@ -1,0 +1,56 @@
+name: build-release
+
+on:
+  release:
+     types:
+       - published
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 21
+          check-latest: true
+      - name: Build artifacts
+        run: |
+          chmod +x gradlew
+          ./gradlew build
+      - name: Upload assets to GitHub
+        uses: AButler/upload-release-assets@v3.0
+        with:
+          files: 'neoforge/build/libs/*[0-9]-beta.jar;fabric/build/libs/*[0-9]-beta.jar'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish assets to Modrinth (fabric)
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-files: fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
+
+          modrinth-id: mDst7DzZ
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-dependencies: |
+            modmenu(optional)
+          
+          loaders: |
+            fabric
+          gameVersions: |
+            1.21
+      - name: Publish assets to Modrinth (neoforge)
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-files: neoforge/build/libs/!(*-@(dev|sources|javadoc)).jar
+
+          modrinth-id: mDst7DzZ
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+#         modrinth-dependencies: |
+#           modmenu(optional)
+          
+          loaders: |
+            neoforge
+          gameVersions: |
+            1.21

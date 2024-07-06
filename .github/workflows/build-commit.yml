@@ -1,0 +1,45 @@
+name: build-commit
+
+on: [ push ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract current commit sha
+        shell: bash
+        run: |
+          echo sha_short="${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
+        id: commit
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Validate Gradle Wrapper
+        uses: gradle/actions/wrapper-validation@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 21
+          check-latest: true
+      - name: Initialize caches
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/loom-cache
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-build-commit-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-build-commit-
+      - name: Build artifacts
+        run: |
+          chmod +x gradlew
+          ./gradlew build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hoyoi-artifacts-commit.${{ steps.commit.outputs.sha_short }}
+          path: |
+            fabric/build/libs/*.jar
+            neoforge/build/libs/*.jar
