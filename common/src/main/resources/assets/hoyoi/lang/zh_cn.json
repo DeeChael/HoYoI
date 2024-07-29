@@ -1,0 +1,16 @@
+{
+  "hoyoi.pause.button.modlist": "Mods",
+  "hoyoi.pause.button.achievement": "成就",
+  "hoyoi.pause.button.statistics": "统计信息",
+  "hoyoi.pause.button.feedback": "反馈至官方",
+  "hoyoi.pause.button.bug": "反馈 Bug",
+  "hoyoi.pause.button.lan": "对局域网开放",
+  "hoyoi.option.apply": "应用",
+  "hoyoi.config.style": "界面风格",
+  "hoyoi.config.reloading": "替换重载界面",
+  "hoyoi.config.loading_world": "替换世界加载界面",
+  "hoyoi.config.pause_screen": "替换暂停界面",
+  "hoyoi.option.style.vanilla": "原版",
+  "hoyoi.option.style.genshin": "原神",
+  "hoyoi.option.style.star_rail": "星琼铁道"
+}
